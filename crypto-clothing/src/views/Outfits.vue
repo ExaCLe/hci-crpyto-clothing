@@ -27,7 +27,7 @@ export default {
     }, 
     data() {
         return {
-            showFilters: false, 
+            showFilters: true, 
         }
     }, 
 }
