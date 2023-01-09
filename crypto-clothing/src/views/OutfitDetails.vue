@@ -33,14 +33,40 @@
         </v-row>
     </v-container>
     <v-container fluid v-else>
-        <v-row class="row">
-            <v-col cols="3" v-for="image in imagesUpper">
-                <v-img :src="image" aspect-ratio="1" id="img"/>
+        <v-row class="item">
+            <v-col cols="3" v-for="item in imagesUpper">
+                <v-card>
+                    <v-img :src="item.path" aspect-ratio="1" id="img" :style="{maxHeight: '30vh'}"/>
+                    <v-row>
+                        <v-col align="end" class="mt-5">
+                            <p class="text-lg-h4">{{ item.price + ' €' }}</p>
+                        </v-col>
+                    </v-row>
+                    <v-row> 
+                        <v-col align="end" class="my-5">
+                            <v-btn class="mx-5" color="primary" outlined >Details</v-btn>
+                            <v-btn class="mx-5" color="primary" @click="showSelectCloth=false">Auswählen</v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card>
             </v-col>
         </v-row>
-        <v-row class="row">
-            <v-col cols="3" v-for="image in imagesLower">
-                <v-img :src="image" aspect-ratio="1" id="img"/>
+        <v-row class="item">
+            <v-col cols="3" v-for="item in imagesLower">
+                <v-card>
+                    <v-img :src="item.path" aspect-ratio="1" id="img" :style="{maxHeight: '30vh'}"/>
+                    <v-row>
+                        <v-col align="end" class="mt-5">
+                            <p class="text-lg-h4">{{ item.price + ' €' }}</p>
+                        </v-col>
+                    </v-row>
+                    <v-row> 
+                        <v-col align="end" class="my-5">
+                            <v-btn class="mx-5" color="primary" outlined >Details</v-btn>
+                            <v-btn class="mx-5" color="primary">Auswählen</v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card>
             </v-col>
         </v-row>
     </v-container>
@@ -80,14 +106,32 @@ export default {
             displaySpinningWheel: false,
             showSelectCloth: false, 
             imagesUpper: [
-                "/src/assets/Jacket1.png",
-                "/src/assets/Jacket2.png",
-                "/src/assets/Jacket3.png",
+                {
+                    path: "/src/assets/Jacket1.png",
+                    price: 119.99,
+                }, 
+                {
+                    path: "/src/assets/Jacket2.png",
+                    price: 104.99, 
+                }, 
+                {
+                    path: "/src/assets/Jacket3.png",
+                    price: 84.99, 
+                }, 
             ], 
             imagesLower: [
-                "/src/assets/Jacket4.png",
-                "/src/assets/Jacket5.png",
-                "/src/assets/Jacket1.png",
+                {
+                    path: "/src/assets/Jacket4.png",
+                    price: 84.99, 
+                }, 
+                {
+                    path: "/src/assets/Jacket5.png",
+                    price: 69.99,
+                }, 
+                {
+                    path: "/src/assets/Jacket1.png",
+                    price: 74.99, 
+                },
             ], 
             selectedJacket: "../src/assets/Men1.png",
         } 
@@ -119,7 +163,7 @@ export default {
 }
 </script>
 <style scoped>
-.row {
+.item {
     max-height: 40vh;
 }
 #image-container {
@@ -174,6 +218,7 @@ export default {
     display: flex; 
     flex-direction: column; 
     justify-content: end; 
+    max-height: 80vh;
 }
 
 #head {

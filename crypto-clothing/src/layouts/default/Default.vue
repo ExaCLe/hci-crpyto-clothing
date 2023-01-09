@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <default-bar />
+    <default-bar class="app-bar" />
 
-    <default-view />
+    <default-view class="default-view mt-10"/>
   </v-app>
 </template>
 
@@ -10,3 +10,14 @@
   import DefaultBar from './AppBar.vue'
   import DefaultView from './View.vue'
 </script>
+
+<style scoped>
+.app-bar {
+  z-index: -1;
+}
+
+.default-view {
+  z-index: 0;
+}
+
+</style>

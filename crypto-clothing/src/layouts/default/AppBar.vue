@@ -15,7 +15,7 @@
 </script>
 <style scoped>
 .app-bar {
-  z-index: 2;
+  z-index: -1;
 }
 p:hover, .icon:hover {
   cursor: pointer;
