@@ -3,12 +3,15 @@
         <v-row>
             <v-col cols="3" id="image-container">
                 <div id="head-register"></div>
-                <div @click="showSpinningWheel" id="body-register"></div>
+                <div ref="body" @mouseenter="showSpinningWheel" @mouseleave="hideSpinningWheel" 
+                    :style="{ boxShadow: displaySpinningWheel ? '0 0 10px 10px red' : 'none' }"
+                    id="body-register">
+                </div>
                 <div id="legs-register"></div> 
                 <div id="shoes-register"></div>
-                <v-img src="../assets/Men1.png" id="image"/> 
+                <v-img :src="selectedJacket" id="image"/> 
             </v-col>
-            <SpinningWheel :position="spinningWheelPosition" v-if="displaySpinningWheel"/> 
+            <SpinningWheel :position="spinningWheelPosition" v-if="displaySpinningWheel" v-on:select="updateSelectedJacket"/> 
             <v-col cols="6" id="parts">
                 <div id="head">
                     <PurchaseItem v-for="item in items.head" :key="item.id" :item="item"/>
@@ -130,6 +133,7 @@ export default {
                     price: 74.99, 
                 },
             ], 
+            selectedJacket: "../src/assets/Men1.png",
         } 
     }, 
     computed: {
@@ -139,10 +143,18 @@ export default {
     }, 
     methods: {
         showSpinningWheel(event) {
-            this.spinningWheelPosition.x = event.pageX;
-            this.spinningWheelPosition.y = event.pageY; 
+            const body = this.$refs.body;
+            const x = body.offsetWidth / 2 + 20;
+            const y = body.offsetHeight + 240;
+            this.spinningWheelPosition = { x, y };
             this.displaySpinningWheel = true;
         }, 
+        hideSpinningWheel() {
+            this.displaySpinningWheel = false;
+        },
+        updateSelectedJacket(selectedJacket) {
+            this.selectedJacket = selectedJacket;
+        },
     }, 
     components: {
         PurchaseItem, 

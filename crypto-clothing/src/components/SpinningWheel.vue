@@ -1,7 +1,8 @@
 <template> 
 <div >
-    <v-avatar :size="avatarSize" v-for="card in cards" :style='{left: card.left + "px", top: card.top + "px"}' class="card">
-        <img :src="card.path" />
+    <v-avatar :size="avatarSize" v-for="card in cards" :style='{left: card.left + "px", top: card.top + "px"}' class="card"
+    @click="selectJacket">
+        <img :src="card.path" style="transform: scale(0.1);"/>
     </v-avatar>
 </div>
 </template>
@@ -9,7 +10,7 @@
 export default {
     data() {
         return {
-            avatarSize: 64, 
+            avatarSize: 92, 
             cards: [
                 {
                     path: "/src/assets/Jacket1.png",
@@ -58,7 +59,7 @@ export default {
     }, 
     methods: {
         positionCards() {
-            const wheelRadius = 100; 
+            const wheelRadius = 130; 
             const center = {
                 x: this.position.x, 
                 y: this.position.y// this.cards[0].top,
@@ -76,6 +77,9 @@ export default {
                 card.left = center.x + x - middle.x;
                 card.top = center.y + y - middle.y;
             })
+        },
+        selectJacket() {
+            this.$emit("select", "/src/assets/MenWithJacket.png");
         }
     }
 }
@@ -85,6 +89,7 @@ export default {
     position: absolute;
     z-index: 1000;
     opacity: 1;
+    box-shadow: 0 0 7px 7px rgb(243, 89, 89);
 }
 
 .wheel {
