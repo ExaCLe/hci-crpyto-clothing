@@ -1,13 +1,14 @@
 <template>
-    <v-container fluid>
+    <v-container fluid v-if="!showSelectCloth">
         <v-row>
             <v-col cols="3" id="image-container">
                 <div id="head-register"></div>
-                <div id="body-register"></div>
-                <div id="legs-register"></div>
+                <div @click="showSpinningWheel" id="body-register"></div>
+                <div id="legs-register"></div> 
                 <div id="shoes-register"></div>
                 <v-img src="../assets/Men1.png" id="image"/> 
             </v-col>
+            <SpinningWheel :position="spinningWheelPosition" v-if="displaySpinningWheel"/> 
             <v-col cols="6" id="parts">
                 <div id="head">
                     <PurchaseItem v-for="item in items.head" :key="item.id" :item="item"/>
@@ -28,9 +29,22 @@
             </v-col>
         </v-row>
     </v-container>
+    <v-container fluid v-else>
+        <v-row class="row">
+            <v-col cols="3" v-for="image in imagesUpper">
+                <v-img :src="image" aspect-ratio="1" id="img"/>
+            </v-col>
+        </v-row>
+        <v-row class="row">
+            <v-col cols="3" v-for="image in imagesLower">
+                <v-img :src="image" aspect-ratio="1" id="img"/>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 <script>
 import PurchaseItem from '../components/PurchaseItem.vue'
+import SpinningWheel from '../components/SpinningWheel.vue'
 
 export default {
     data() {
@@ -55,7 +69,23 @@ export default {
                         price: 79.99, 
                     }, 
                 ],
-            }
+            }, 
+            spinningWheelPosition: {
+                x: 0, 
+                y: 0, 
+            },
+            displaySpinningWheel: false,
+            showSelectCloth: true, 
+            imagesUpper: [
+                "/src/assets/Jacket1.png",
+                "/src/assets/Jacket2.png",
+                "/src/assets/Jacket3.png",
+            ], 
+            imagesLower: [
+                "/src/assets/Jacket4.png",
+                "/src/assets/Jacket5.png",
+                "/src/assets/Jacket1.png",
+            ], 
         } 
     }, 
     computed: {
@@ -63,12 +93,23 @@ export default {
             return this.items.reduce((total, category) => category.reduce((total, item) => total + item.price, 0), 0)
         }, 
     }, 
+    methods: {
+        showSpinningWheel(event) {
+            this.spinningWheelPosition.x = event.pageX;
+            this.spinningWheelPosition.y = event.pageY; 
+            this.displaySpinningWheel = true;
+        }, 
+    }, 
     components: {
-        PurchaseItem
+        PurchaseItem, 
+        SpinningWheel,
     }
 }
 </script>
-<style>
+<style scoped>
+.row {
+    max-height: 40vh;
+}
 #image-container {
     display: grid; 
     grid-auto-rows: 2.5%; 
