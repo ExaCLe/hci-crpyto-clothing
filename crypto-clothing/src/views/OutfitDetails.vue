@@ -3,7 +3,7 @@
         <v-row>
             <v-col cols="3" id="image-container">
                 <div id="head-register"></div>
-                <div ref="body" @mouseenter="showSpinningWheel" @mouseleave="hideSpinningWheel" 
+                <div ref="body" @click="positionSpinningWheel"
                     :style="{ boxShadow: displaySpinningWheel ? '0 0 10px 10px red' : 'none' }"
                     id="body-register">
                 </div>
@@ -27,8 +27,9 @@
                 </div>
             </v-col>
             <v-col align="end" class="row pb-15">
+                <p class="text-lg-h4">{{ total + ' €' }}</p>
                 <v-btn color="primary" class="mt-10">Zur Kasse</v-btn>
-                <v-btn color="primary" class="mt-10">Zum Warenkorb</v-btn>
+                <v-btn color="primary" class="mt-10" @click="this.$router.push('/cart')">Zum Warenkorb</v-btn>
             </v-col>
         </v-row>
     </v-container>
@@ -138,23 +139,30 @@ export default {
     }, 
     computed: {
         total() {
-            return this.items.reduce((total, category) => category.reduce((total, item) => total + item.price, 0), 0)
+            let total = 0; 
+            Object.keys(this.items).forEach((category) =>  {
+                total += this.items[category].reduce((total, item) => total + item.price, 0); 
+            })
+            return total.toFixed(2)
         }, 
     }, 
     methods: {
-        showSpinningWheel(event) {
-            const body = this.$refs.body;
-            const x = body.offsetWidth / 2 + 20;
-            const y = body.offsetHeight + 240;
-            this.spinningWheelPosition = { x, y };
-            this.displaySpinningWheel = true;
-        }, 
         hideSpinningWheel() {
             this.displaySpinningWheel = false;
         },
         updateSelectedJacket(selectedJacket) {
             this.selectedJacket = selectedJacket;
+            this.showSelectCloth = true; 
+            this.displaySpinningWheel = false;
+            this.items.body.push({
+                name: "Sakko", 
+                price: 104.99, 
+            });
         },
+        positionSpinningWheel(event) {
+            this.spinningWheelPosition = { x: event.clientX, y: event.clientY };
+            this.displaySpinningWheel = true;
+        }
     }, 
     components: {
         PurchaseItem, 
@@ -183,7 +191,7 @@ export default {
     grid-row-end: 9; 
     z-index: 100;
     opacity: 0.5;
-    background-color: aqua;
+    /* background-color: aqua; */
 }
 
 #body-register {
@@ -192,7 +200,7 @@ export default {
     grid-row-end: 17; 
     z-index: 100;
     opacity: 0.5;
-    background-color: red;
+    /* background-color: red; */
 }
 
 #legs-register {
@@ -201,7 +209,7 @@ export default {
     grid-row-end: 33; 
     z-index: 100;
     opacity: 0.5;
-    background-color: green;
+    /* background-color: green; */
 }
 
 #shoes-register {
@@ -210,7 +218,7 @@ export default {
     grid-row-end: 40; 
     z-index: 100;
     opacity: 0.5;
-    background-color: blue;
+    /* background-color: blue; */
 }
 
 
