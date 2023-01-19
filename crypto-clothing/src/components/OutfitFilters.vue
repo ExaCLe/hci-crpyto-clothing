@@ -24,26 +24,26 @@ export default {
     data() {
         return {
             sexOptions: [
-                'mdi-gender-male', 
-                'mdi-gender-female', 
+                {icon: 'mdi-gender-male', label: 'Männlich'},
+                {icon: 'mdi-gender-female', label: 'Weiblich'}, 
             ], 
             sex: undefined, 
             environmentOptions: [
-                'mdi-home', 
-                'mdi-nature', 
+                {icon: 'mdi-home', label: 'Drinnen'}, 
+                {icon: 'mdi-nature', label: 'Draußen'}, 
             ], 
             environment: undefined,
             heatOptions: [
-                'mdi-weather-sunny', 
-                'mdi-weather-windy', 
-                'mdi-weather-snowy', 
+                {icon: 'mdi-weather-sunny', label: 'Sommer'}, 
+                {icon: 'mdi-weather-cloudy', label: 'Herbst'},
+                {icon: 'mdi-weather-snowy', label: 'Winter'},
             ],
             heat: undefined,
             occasionOptions: [
-                'mdi-party-popper', 
-                'mdi-sofa', 
-                'mdi-briefcase', 
-                'mdi-ferris-wheel', 
+                {icon: 'party-popper', label: 'Feier'}, 
+                {icon: 'mdi-sofa', label: 'Zuhause'}, 
+                {icon: 'mdi-briefcase', label: 'Arbeit'}, 
+                {icon: 'mdi-ferris-wheel', label: 'Freizeit'},
             ], 
             occasion: undefined,
         }

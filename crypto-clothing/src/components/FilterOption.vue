@@ -5,10 +5,11 @@
         </v-col>
         <v-spacer/>
         <v-col cols="10" sm="5" md="4" lg="2" v-for="option, index in options" align="end">
-            <v-icon size="60" :color="selectedIndex == index ? 'blue': undefined" @click="selectIndex(index)" :icon="option"/>
+            <v-icon size="60" :color="selectedIndex == index ? 'blue': undefined" @click="selectIndex(index)" :icon="option.icon"/>
+            <p class="text-h5" :style="{color: selectedIndex == index ? '#2196f3' : 'black'}">{{ option.label }}</p>
         </v-col>
     </v-row>
-    <v-icon size="100">mdi-female</v-icon> 
+    <v-icon size="70">mdi-female</v-icon> 
 </template>
 <script>
 export default {
