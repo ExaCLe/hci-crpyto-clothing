@@ -1,5 +1,6 @@
 <template>
     <v-container fluid v-if="!showSelectCloth">
+        <v-btn color="primary" variant="outlined" class="mb-2">← Back</v-btn>
         <v-row>
             <v-col cols="3" id="image-container">
                 <div id="head-register"></div>
@@ -14,22 +15,22 @@
             <SpinningWheel :position="spinningWheelPosition" v-if="displaySpinningWheel" v-on:select="updateSelectedJacket"/> 
             <v-col cols="6" id="parts">
                 <div id="head">
-                    <PurchaseItem v-for="item in items.head" :key="item.id" :item="item"/>
+                    <PurchaseItem v-for="item in items.head" :key="item.id" :item="item" @edit="updateSelectedJacket" @delete="removeItem(item)"/>
                 </div>
                 <div id="body">
-                    <PurchaseItem v-for="item in items.body" :key="item.id" :item="item"/>
+                    <PurchaseItem v-for="item in items.body" :key="item.id" :item="item" @edit="updateSelectedJacket" @delete="removeItem(item)"/>
                 </div>
                 <div id="legs">
-                    <PurchaseItem v-for="item in items.legs" :key="item.id" :item="item"/>
+                    <PurchaseItem v-for="item in items.legs" :key="item.id" :item="item" @edit="updateSelectedJacket" @delete="removeItem(item)"/>
                 </div>
                 <div id="shoes">
-                    <PurchaseItem v-for="item in items.shoes" :key="item.id" :item="item"/>
+                    <PurchaseItem v-for="item in items.shoes" :key="item.id" :item="item" @edit="updateSelectedJacket" @delete="removeItem(item)"/>
                 </div>
             </v-col>
             <v-col align="end" class="row pb-15">
                 <p class="text-lg-h4">{{ total + ' €' }}</p>
-                <v-btn color="primary" class="mt-10">Zur Kasse</v-btn>
-                <v-btn color="primary" class="mt-10" @click="this.$router.push('/cart')">Zum Warenkorb</v-btn>
+                <v-btn color="primary" class="mt-10" variant="outlined">Zur Kasse</v-btn>
+                <v-btn color="primary" class="mt-5" @click="this.$router.push('/cart')">Zum Warenkorb</v-btn>
             </v-col>
         </v-row>
     </v-container>
@@ -45,7 +46,7 @@
                     </v-row>
                     <v-row> 
                         <v-col align="end" class="my-5">
-                            <v-btn class="mx-5" color="primary" outlined >Details</v-btn>
+                            <v-btn class="mx-5" color="primary" variant="outlined" >Details</v-btn>
                             <v-btn class="mx-5" color="primary" @click="showSelectCloth=false">Auswählen</v-btn>
                         </v-col>
                     </v-row>
@@ -63,7 +64,7 @@
                     </v-row>
                     <v-row> 
                         <v-col align="end" class="my-5">
-                            <v-btn class="mx-5" color="primary" outlined >Details</v-btn>
+                            <v-btn class="mx-5" color="primary" variant="outlined" >Details</v-btn>
                             <v-btn class="mx-5" color="primary">Auswählen</v-btn>
                         </v-col>
                     </v-row>
@@ -149,6 +150,9 @@ export default {
     methods: {
         hideSpinningWheel() {
             this.displaySpinningWheel = false;
+        },
+        removeItem(item) {
+            this.items.body = this.items.body.filter((i) => i.name !== item.name);
         },
         updateSelectedJacket(selectedJacket) {
             this.selectedJacket = selectedJacket;

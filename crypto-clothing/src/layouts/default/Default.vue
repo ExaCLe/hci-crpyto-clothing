@@ -2,7 +2,7 @@
   <v-app>
     <default-bar class="app-bar" />
 
-    <default-view class="default-view mt-10"/>
+    <default-view class="default-view mt-2"/>
   </v-app>
 </template>
 
