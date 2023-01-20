@@ -12,6 +12,11 @@
                 <div id="shoes-register"></div>
                 <v-img :src="selectedJacket" id="image"/> 
             </v-col>
+            <v-overlay v-model="overlay" persistent>
+                <div class="highlight d-flex align-center justify-center" @click="hideOverlayAndOpenSpinningWheel"> 
+                    <p :style="{color: 'white', fontSize: '30px'}">Click here to add a new item</p>
+                </div>
+            </v-overlay>
             <SpinningWheel :position="spinningWheelPosition" v-if="displaySpinningWheel" v-on:select="updateSelectedJacket"/> 
             <v-col cols="6" id="parts">
                 <div id="head">
@@ -80,6 +85,7 @@ import SpinningWheel from '../components/SpinningWheel.vue'
 export default {
     data() {
         return {
+            overlay: true,  
             items: {
                 head: [], 
                 body: [
@@ -166,7 +172,11 @@ export default {
         positionSpinningWheel(event) {
             this.spinningWheelPosition = { x: event.clientX, y: event.clientY };
             this.displaySpinningWheel = true;
-        }
+        }, 
+        hideOverlayAndOpenSpinningWheel(event) {
+            this.overlay = false; 
+            this.positionSpinningWheel(event);
+        },
     }, 
     components: {
         PurchaseItem, 
@@ -175,6 +185,17 @@ export default {
 }
 </script>
 <style scoped>
+.highlight {
+    background-color: red;
+    opacity: 0.5;
+    height: 300px;
+    width: 705px; 
+    position: absolute;
+    top: 500px; 
+    left: 25px; 
+
+}
+
 .item {
     max-height: 40vh;
 }
