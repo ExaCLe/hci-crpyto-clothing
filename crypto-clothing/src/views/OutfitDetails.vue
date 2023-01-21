@@ -20,16 +20,16 @@
             <SpinningWheel :position="spinningWheelPosition" v-if="displaySpinningWheel" v-on:select="updateSelectedJacket"/> 
             <v-col cols="6" id="parts">
                 <div id="head">
-                    <PurchaseItem v-for="item in items.head" :key="item.id" :item="item" @edit="updateSelectedJacket" @delete="removeItem(item)"/>
+                    <PurchaseItem v-for="item in items.head" :key="item.id" :item="item" @edit="showSelectCloth = true;" @delete="removeItem(item)"/>
                 </div>
                 <div id="body">
-                    <PurchaseItem v-for="item in items.body" :key="item.id" :item="item" @edit="updateSelectedJacket" @delete="removeItem(item)"/>
+                    <PurchaseItem v-for="item in items.body" :key="item.id" :item="item" @edit="showSelectCloth = true;" @delete="removeItem(item)"/>
                 </div>
                 <div id="legs">
-                    <PurchaseItem v-for="item in items.legs" :key="item.id" :item="item" @edit="updateSelectedJacket" @delete="removeItem(item)"/>
+                    <PurchaseItem v-for="item in items.legs" :key="item.id" :item="item" @edit="showSelectCloth = true;" @delete="removeItem(item)"/>
                 </div>
                 <div id="shoes">
-                    <PurchaseItem v-for="item in items.shoes" :key="item.id" :item="item" @edit="updateSelectedJacket" @delete="removeItem(item)"/>
+                    <PurchaseItem v-for="item in items.shoes" :key="item.id" :item="item" @edit="showSelectCloth = true;" @delete="removeItem(item)"/>
                 </div>
             </v-col>
             <v-col align="end" class="row pb-15">
@@ -159,8 +159,10 @@ export default {
         },
         removeItem(item) {
             this.items.body = this.items.body.filter((i) => i.name !== item.name);
+            this.selectedJacket = "../src/assets/Men1.png";
         },
         updateSelectedJacket(selectedJacket) {
+            if (this.items.body.filter((item) => item.name === "Sakko").length > 0) return;
             this.selectedJacket = selectedJacket;
             this.showSelectCloth = true; 
             this.displaySpinningWheel = false;
